@@ -30,13 +30,14 @@ rss.items.reverse.each do |item|
   next if sendlist.include?(link)
   title = item.title
   description = item.description
-  twite = [title, description].join("　")
-  twite = twite[0..118] if twite.size > 119
-  twite = [twite, short_url(link)].join("　").toutf8
+  twite = title + " " + description
+  twite = twite.split(//)[0..110] if twite.split(//).size > 111
+  twite = twite + " " + short_url(link)
+  twite = twite.toutf8
 
-  sendlist << link
   begin
     Twitter.update(twite)
+    sendlist << link
     puts link
   rescue => e
     puts e.message
