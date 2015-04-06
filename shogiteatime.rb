@@ -1,4 +1,5 @@
 #!/usr/local/bin/ruby -Ku
+# encoding: utf-8
 require 'rubygems'
 require 'twitter'
 require 'rss'
@@ -10,7 +11,7 @@ rss = RSS::Parser.parse("./shogiteatime.rss")
 sendlist = YAML.load_file("./sendlist.yaml")
 sendlist ||= []
 
-Twitter.configure do |config|
+client = Twitter::REST::Client.new do |config|
   config.consumer_key = "g1t2z3YgeHvFkTGxQw1xQ"
   config.consumer_secret = "T0SXDcq4WBwXuL9G9Dpmc4sKE8KLsE2ye1o69wrbcs"
   config.oauth_token = "254011888-6IL1uR7IN8a6yzYXuvNkvmQ8CtS3uGRG6ppDS2zM"
@@ -36,8 +37,8 @@ rss.items.reverse.each do |item|
   twite = twite.toutf8
 
   begin
-    Twitter.update(twite)
     sendlist << link
+    client.update(twite)
     puts link
   rescue => e
     puts e.message
