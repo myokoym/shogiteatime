@@ -23,7 +23,7 @@ def short_url(argument_url)
   long_url = argument_url.delete("\n").gsub("#", "%23")
   bit_request_url = "http://api.bit.ly/shorten?version=2.0.1&longUrl=#{long_url}&login=myokoym&apiKey=R_f70bcfaeb83cfc52922d5d9c53221927"
   results = YAML.load(open(bit_request_url))
-  results["results"][long_url]["shortUrl"] 
+  results["results"][long_url]["shortUrl"]
 end
 
 rss.items.reverse.each do |item|
